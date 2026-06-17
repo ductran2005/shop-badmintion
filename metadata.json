@@ -1,0 +1,6 @@
+{
+  "name": "VietBad Store",
+  "description": "Cửa hàng cầu lông chính hãng, chuyên vợt, giày, phụ kiện và quần áo thể thao.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
