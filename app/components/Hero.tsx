@@ -14,12 +14,12 @@ interface HeroProps {
 
 const bannerImages = [
   {
-    src: '/banner/vietbad-badminton-sale-banner.png',
-    alt: 'Banner khuyen mai do cau long VietBad Store'
+    src: '/banner/badminton-promo-text-banner-v3.png',
+    alt: 'Banner BST cau long moi VietBad Store'
   },
   {
-    src: '/banner/33f677f6-6ae8-4a78-beef-4bb4d236c170.png',
-    alt: 'Banner khuyen mai VietBad Store 1'
+    src: '/banner/vietbad-badminton-sale-banner.png',
+    alt: 'Banner khuyen mai do cau long VietBad Store'
   },
   {
     src: '/banner/6db34bd8-0b49-4e54-8474-ba0a8b36c925.png',

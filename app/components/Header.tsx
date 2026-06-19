@@ -108,19 +108,19 @@ export default function Header({
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-gray-200 bg-white shadow-sm transition-all duration-300">
-      <div className="mx-auto flex max-w-[1536px] flex-col px-4 md:px-6 lg:px-10">
+      <div className="mx-auto flex w-full max-w-[1536px] flex-col px-3 sm:px-4 md:px-6 lg:px-10">
         
         {/* Main Header Container */}
-        <div className="flex h-20 items-center justify-between gap-4 md:gap-8">
+        <div className="flex h-16 w-full min-w-0 items-center justify-between gap-2 sm:h-20 md:gap-8">
           
           {/* Brand Logo */}
-          <Link href="/" className="flex cursor-pointer items-center text-2xl font-extrabold tracking-tight md:text-3xl" id="header-logo-btn">
+          <Link href="/" className="flex min-w-0 cursor-pointer items-center text-xl font-extrabold tracking-tight sm:text-2xl lg:text-3xl" id="header-logo-btn">
             <span className="text-brand-blue font-black tracking-tighter">VIETBAD</span>
             <span className="text-brand-yellow font-black tracking-tighter">STORE</span>
           </Link>
 
           {/* Search Box */}
-          <div className="relative hidden max-w-xl flex-1 md:block" id="header-search-container">
+          <div className="relative hidden max-w-xl min-w-0 flex-1 md:block" id="header-search-container">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
@@ -181,15 +181,15 @@ export default function Header({
           </div>
 
           {/* Actions & Contacts */}
-          <div className="flex items-center gap-3 md:gap-5">
+          <div className="flex shrink-0 items-center gap-2 lg:gap-5">
             {/* Phone Contact */}
             <button
               id="hotline-contact-btn"
               onClick={handleCopyPhone}
-              className="relative flex cursor-pointer items-center gap-2 rounded-full bg-brand-yellow px-3.5 py-1.5 text-left text-xs font-black text-gray-900 transition-all hover:bg-brand-yellow-hover focus:outline-none"
+              className="relative flex h-10 w-10 cursor-pointer items-center justify-center gap-2 rounded-full bg-brand-yellow p-0 text-left text-xs font-black text-gray-900 transition-all hover:bg-brand-yellow-hover focus:outline-none lg:w-auto lg:px-3.5 lg:py-1.5"
             >
               <Phone className="h-4 w-4 animate-bounce text-gray-900" />
-              <div>
+              <div className="hidden lg:block">
                 <span className="block text-[9px] uppercase leading-none opacity-80">Tư vấn mua hàng</span>
                 <span className="block text-xs font-extrabold">0909 999 999</span>
               </div>
@@ -204,7 +204,7 @@ export default function Header({
             <button
               id="header-orders-history-btn"
               onClick={onOpenOrders}
-              className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-700 transition hover:bg-gray-200 focus:outline-none"
+              className="relative hidden h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-700 transition hover:bg-gray-200 focus:outline-none md:flex"
               title="Lịch sử mua hàng"
             >
               <ClipboardList className="h-5 w-5" />
@@ -300,8 +300,10 @@ export default function Header({
 
       </div>
 
-      <nav className="border-t border-gray-100 bg-white">
-        <div className="mx-auto flex max-w-[1536px] items-center justify-start gap-7 overflow-x-auto px-4 py-3 text-[11px] font-black uppercase tracking-wider text-gray-700 [scrollbar-width:none] md:overflow-visible md:justify-center md:gap-12 md:px-6 lg:px-10 [&::-webkit-scrollbar]:hidden">
+      <nav className="relative border-t border-gray-100 bg-white">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-white to-transparent lg:hidden" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-white to-transparent lg:hidden" />
+        <div className="mx-auto flex w-full max-w-[1536px] items-center justify-start gap-5 overflow-x-auto px-3 py-3 text-[10px] font-black uppercase tracking-wider text-gray-700 [scrollbar-width:none] sm:gap-6 sm:px-4 sm:text-[11px] lg:justify-center lg:gap-8 lg:overflow-visible lg:px-10 xl:gap-12 [&::-webkit-scrollbar]:hidden">
           <Link href="/#hero-section" className="shrink-0 transition hover:text-brand-blue">Trang chủ</Link>
           <div className="group relative shrink-0">
             <Link
@@ -312,7 +314,7 @@ export default function Header({
               Sản phẩm
               <ChevronRight className="h-3 w-3 rotate-90 transition group-hover:translate-y-0.5" />
             </Link>
-            <div className="invisible fixed left-1/2 top-[168px] z-50 w-[min(92vw,940px)] -translate-x-1/2 pt-3 opacity-0 transition duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 md:absolute md:left-1/2 md:top-full">
+            <div className="invisible fixed left-1/2 top-[168px] z-50 hidden w-[min(92vw,940px)] -translate-x-1/2 pt-3 opacity-0 transition duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 md:absolute md:left-1/2 md:top-full md:block">
               <div className="grid max-h-[70vh] overflow-y-auto rounded-lg border border-gray-200 bg-white text-left shadow-2xl lg:grid-cols-[260px_1fr]">
                 <div className="flex flex-col justify-between bg-brand-blue px-6 py-6 text-white">
                   <div>

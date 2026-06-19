@@ -67,7 +67,7 @@ export default function ProductDetailModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4">
           
           {/* Backdrop */}
           <motion.div
@@ -84,7 +84,7 @@ export default function ProductDetailModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="relative flex flex-col w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white text-gray-900 shadow-2xl z-10"
+            className="relative z-10 flex max-h-[100dvh] w-full max-w-4xl flex-col overflow-y-auto rounded-none bg-white text-gray-900 shadow-2xl sm:max-h-[90vh] sm:rounded-3xl"
             id={`product-detail-modal-${product.id}`}
           >
             
@@ -92,24 +92,24 @@ export default function ProductDetailModal({
             <button
               onClick={onClose}
               id="close-detail-modal-btn"
-              className="absolute right-4 top-4 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-900 transition-colors z-20 focus:outline-none"
+              className="absolute right-3 top-3 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-900 focus:outline-none sm:right-4 sm:top-4"
             >
               <X className="h-5 w-5" />
             </button>
 
             {/* Modal Body: Split 2 columns md:grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 md:p-8">
+            <div className="grid grid-cols-1 gap-5 p-4 sm:p-6 md:grid-cols-2 md:gap-8 md:p-8">
               
               {/* Column 1: Main Graphics */}
               <div className="flex flex-col items-center">
-                <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-3xl bg-gray-50 border border-gray-100">
+                <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 sm:rounded-3xl">
                   {activeImage ? (
                     <Image
                       src={activeImage}
                       alt={product.name}
                       fill
                       sizes="(max-width: 768px) 100vw, 45vw"
-                      className="object-contain p-5"
+                      className="object-contain p-3 sm:p-5"
                     />
                   ) : (
                     <span className="text-9xl select-none filter drop-shadow-xl animate-pulse">
@@ -233,7 +233,7 @@ export default function ProductDetailModal({
                       <h3 className="text-xs font-black uppercase tracking-wider text-gray-700 mb-2.5">
                         ⚙️ Thông số kỹ thuật chi tiết:
                       </h3>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+                      <div className="grid grid-cols-1 gap-x-4 gap-y-2 text-xs sm:grid-cols-2">
                         {product.specs.weight && (
                           <div className="flex flex-col border-b border-gray-50 pb-1">
                             <span className="text-gray-400">Trọng lượng (U):</span>
@@ -276,7 +276,7 @@ export default function ProductDetailModal({
                 </div>
 
                 {/* Footer Controls: Quantity selection & Interactive checkout buttons */}
-                <div className="mt-6 border-t border-gray-150 pt-4 flex items-center gap-4 flex-wrap">
+                <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-gray-150 pt-4 sm:gap-4">
                   
                   {/* Quantity Spinner */}
                   <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden shrink-0">
@@ -316,7 +316,7 @@ export default function ProductDetailModal({
                   <button
                     onClick={handleAddToCart}
                     id={`modal-add-to-cart-submit-${product.id}`}
-                    className="flex-1 flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-blue py-3 font-extrabold text-sm text-white hover:bg-brand-blue-hover transition shadow-md active:scale-95"
+                    className="flex min-w-full flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-blue px-4 py-3 text-sm font-extrabold text-white shadow-md transition hover:bg-brand-blue-hover active:scale-95 sm:min-w-0"
                   >
                     <ShoppingCart className="h-4 w-4" />
                     <span>Thêm vào giỏ hàng - {UTILS.formatCurrency(product.price * quantity)}</span>

@@ -16,7 +16,7 @@ export default function BestSellersPage() {
       eyebrow="Khuyến mãi cực hot"
       title="Sale nhanh cho đồ cầu lông đáng mua"
       description="Các mẫu đang có giá tốt trong tuần, phù hợp để nâng cấp vợt, đổi giày hoặc mua thêm phụ kiện tập luyện trước buổi ra sân."
-      heroImage="/banner/33f677f6-6ae8-4a78-beef-4bb4d236c170.png"
+      heroImage="/banner/badminton-promo-text-banner-v3.png"
       products={products}
       groupByCategory
       badges={['Giá đã giảm', 'Số lượng có hạn', 'Có hỗ trợ COD']}

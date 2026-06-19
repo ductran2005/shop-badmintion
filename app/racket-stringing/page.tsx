@@ -91,6 +91,8 @@ export default function RacketStringingPage() {
   const [form, setForm] = useState<BookingForm>(EMPTY_FORM);
   const [submitted, setSubmitted] = useState(false);
   const bookingRef = useRef<HTMLElement>(null);
+  const bookingCounterRef = useRef(0);
+  const bookingIdSeed = React.useId().replace(/[^a-zA-Z0-9]/g, '');
 
   const stringingProducts = useMemo(() => {
     const accessories = PRODUCTS.filter((p) => p.category === 'accessories').slice(0, 8);
@@ -151,8 +153,10 @@ export default function RacketStringingPage() {
   const handleBack = () => setStep((s) => Math.max(s - 1, 0));
 
   const handleSubmit = () => {
+    bookingCounterRef.current += 1;
+
     const booking: StringingBooking = {
-      id: `BK${Date.now()}`,
+      id: `BK${bookingIdSeed}${bookingCounterRef.current}`,
       servicePackage: 'Đan vợt',
       stringId: form.stringId,
       stringName: selectedString?.name ?? '(không chọn)',
@@ -164,7 +168,7 @@ export default function RacketStringingPage() {
       stringPrice: selectedString?.price ?? 0,
       servicePrice: 0,
       total: selectedString?.price ?? 0,
-      createdAt: new Date().toISOString(),
+      createdAt: form.date,
       status: 'pending',
     };
     console.info('New stringing booking:', booking);
@@ -173,7 +177,7 @@ export default function RacketStringingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-gray-50 font-sans text-gray-900">
       <Header
         cart={cart}
         wishlist={wishlist}
@@ -194,14 +198,14 @@ export default function RacketStringingPage() {
           backgroundSize: 'cover',
         }}
       >
-        <div className="mx-auto grid min-h-[430px] max-w-[1536px] items-end gap-10 px-4 py-14 md:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-10">
-          <div>
+        <div className="mx-auto grid min-h-[360px] w-full max-w-[1536px] min-w-0 items-end gap-8 px-4 py-10 md:min-h-[430px] md:px-6 md:py-14 lg:grid-cols-[1.15fr_0.85fr] lg:px-10">
+          <div className="min-w-0">
             <Link href="/" className="mb-7 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/85 hover:text-brand-yellow">
               <Home className="h-4 w-4" />
               Trang chủ
             </Link>
             <p className="text-xs font-black uppercase tracking-[0.24em] text-brand-yellow">Dịch vụ đan vợt</p>
-            <h1 className="mt-4 max-w-3xl text-4xl font-black tracking-tight md:text-6xl">Căng cước chuẩn lực, nhận vợt tự tin ra sân</h1>
+            <h1 className="mt-4 max-w-3xl break-words text-3xl font-black tracking-tight sm:text-4xl md:text-6xl">Căng cước chuẩn lực, nhận vợt tự tin ra sân</h1>
             <p className="mt-5 max-w-2xl text-sm font-semibold leading-7 text-blue-50 md:text-base">
               VietBad hỗ trợ kiểm tra khung, chọn cước, tư vấn số kg và căng bằng máy điện tử để mặt vợt ổn định hơn trong từng pha đánh.
             </p>
@@ -214,7 +218,7 @@ export default function RacketStringingPage() {
             </button>
           </div>
 
-          <div className="grid gap-3">
+          <div className="grid min-w-0 gap-3">
             {[
               { icon: Gauge, title: 'Căng đúng số kg', text: 'Tư vấn theo lực tay và thói quen đánh' },
               { icon: Clock, title: 'Nhận trong ngày', text: 'Áp dụng khi vợt và cước có sẵn tại shop' },
@@ -235,7 +239,7 @@ export default function RacketStringingPage() {
       {/* Trust strip */}
       <section className="border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-[1536px] px-4 md:px-6 lg:px-10">
-          <div className="grid grid-cols-2 divide-x divide-gray-200 lg:grid-cols-4">
+          <div className="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
             {[
               { icon: Wrench, label: '500+ vợt / tháng', sub: 'Kinh nghiệm thực tế' },
               { icon: BadgeCheck, label: 'Máy điện tử', sub: 'Căng đều lực, chuẩn kg' },
@@ -254,7 +258,7 @@ export default function RacketStringingPage() {
         </div>
       </section>
 
-      <main className="mx-auto max-w-[1536px] px-4 py-12 md:px-6 lg:px-10">
+      <main className="mx-auto max-w-[1536px] px-4 py-8 md:px-6 md:py-12 lg:px-10">
 
         {/* Quy trình */}
         <section>
@@ -336,7 +340,7 @@ export default function RacketStringingPage() {
           ) : (
             <div className="rounded-lg border border-gray-200 bg-white shadow-sm">
               {/* Wizard header */}
-              <div className="border-b border-gray-200 px-6 py-4">
+              <div className="border-b border-gray-200 px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-black uppercase tracking-[0.18em] text-brand-blue">Đặt lịch đan vợt</p>
                   <button onClick={() => setWizardOpen(false)} className="cursor-pointer text-xs font-semibold text-gray-400 hover:text-gray-700">
@@ -369,9 +373,9 @@ export default function RacketStringingPage() {
                 </div>
               </div>
 
-              <div className="grid gap-0 lg:grid-cols-[1fr_320px]">
+              <div className="grid min-w-0 gap-0 lg:grid-cols-[minmax(0,1fr)_320px]">
                 {/* Main step content */}
-                <div className="p-6">
+                <div className="min-w-0 p-4 sm:p-6">
                   <AnimatePresence mode="wait">
                     {/* Step 0: Chọn cước */}
                     {step === 0 && (
@@ -388,7 +392,7 @@ export default function RacketStringingPage() {
                           />
                         </div>
                         {/* 2-col grid */}
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                           {STRINGS
                             .filter((s) =>
                               stringSearch === '' ||

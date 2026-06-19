@@ -140,7 +140,7 @@ export default function ProductDetailPage({ product, relatedProducts }: ProductD
   const isWishlisted = wishlist.some((item) => item.id === product.id);
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-gray-50 font-sans text-gray-900">
       <Header
         cart={cart}
         wishlist={wishlist}
@@ -168,16 +168,16 @@ export default function ProductDetailPage({ product, relatedProducts }: ProductD
           <span className="text-gray-900">{product.name}</span>
         </nav>
 
-        <section className="grid gap-10 rounded-3xl border border-gray-200 bg-white p-4 shadow-sm md:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+        <section className="grid gap-6 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm sm:p-4 md:gap-10 md:rounded-3xl md:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
           <div>
-            <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-3xl border border-gray-100 bg-gray-50">
+            <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 md:rounded-3xl">
               {activeImage ? (
                 <Image
                   src={activeImage}
                   alt={product.name}
                   fill
                   sizes="(max-width: 1024px) 100vw, 48vw"
-                  className="object-contain p-5"
+                  className="object-contain p-3 sm:p-5"
                   priority
                 />
               ) : (
@@ -239,12 +239,12 @@ export default function ProductDetailPage({ product, relatedProducts }: ProductD
                 </div>
               </div>
 
-              <h1 className="mt-3 text-3xl font-black leading-tight tracking-tight text-gray-950 md:text-4xl">
+              <h1 className="mt-3 text-2xl font-black leading-tight tracking-tight text-gray-950 md:text-4xl">
                 {product.name}
               </h1>
 
               <div className="mt-5 flex flex-wrap items-center gap-3">
-                <span className="text-3xl font-black text-red-600">
+                <span className="text-2xl font-black text-red-600 sm:text-3xl">
                   {UTILS.formatCurrency(product.price)}
                 </span>
                 {product.oldPrice && (
@@ -314,7 +314,7 @@ export default function ProductDetailPage({ product, relatedProducts }: ProductD
               )}
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-gray-200 pt-5">
+            <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-gray-200 pt-5 sm:gap-4">
               <div className="flex shrink-0 items-center overflow-hidden rounded-xl border border-gray-200 bg-white">
                 <button
                   onClick={() => setQuantity((value) => Math.max(1, value - 1))}
@@ -347,7 +347,7 @@ export default function ProductDetailPage({ product, relatedProducts }: ProductD
 
               <button
                 onClick={handlePrimaryAddToCart}
-                className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-black text-white shadow-lg shadow-brand-blue/20 transition hover:bg-brand-blue-hover active:scale-95"
+                className="flex min-h-12 min-w-full flex-1 items-center justify-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-center text-sm font-black text-white shadow-lg shadow-brand-blue/20 transition hover:bg-brand-blue-hover active:scale-95 sm:min-w-0"
               >
                 <ShoppingCart className="h-4 w-4" />
                 <span>Thêm vào giỏ hàng - {UTILS.formatCurrency(product.price * quantity)}</span>

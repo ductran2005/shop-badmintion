@@ -7,6 +7,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, ShieldCheck, Truck, Wrench, MessageCircle, Zap } from 'lucide-react';
 import Header from './components/Header';
@@ -249,7 +250,32 @@ export default function Home() {
     .filter((p) => p.isHot && p.isSale)
     .sort((a, b) => (b.discountPercent ?? 0) - (a.discountPercent ?? 0))
     .slice(0, 5);
-  const shouldShowBestSellerArrows = false;
+  const flashSaleProducts = [
+    {
+      id: 'p5',
+      badge: '-30% Giảm',
+      eyebrow: 'Lining',
+      title: 'Lining Axforce Cannon 4U',
+      price: 1490000,
+      oldPrice: 1990000,
+      description: 'Vợt dễ chơi, trợ lực tốt cho người mới nâng cấp và đánh phong trào.',
+      fallbackImage: '/products/p5.jpg',
+      imageClassName: 'object-cover object-center',
+      imageSizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 250px'
+    },
+    {
+      id: 'p6',
+      badge: '-25% Hot',
+      eyebrow: 'Áo thể thao',
+      title: 'Áo thi đấu Yonex Dry Fit',
+      price: 299000,
+      oldPrice: 399000,
+      description: 'Chất vải nhẹ, thoáng khí, phù hợp tập luyện và thi đấu cuối tuần.',
+      fallbackImage: '/products/p6.jpg',
+      imageClassName: 'object-cover object-center',
+      imageSizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 250px'
+    }
+  ];
   const normalizedSearchQuery = normalizeSearchText(searchQuery.trim());
   const searchedProducts = React.useMemo(() => {
     if (!normalizedSearchQuery) return [];
@@ -274,7 +300,7 @@ export default function Home() {
   const isSearching = searchQuery.trim().length > 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900 selection:bg-brand-blue selection:text-white" id="main-app-container">
+    <div className="flex min-h-screen w-full max-w-full flex-col overflow-x-hidden bg-gray-50 font-sans text-gray-900 selection:bg-brand-blue selection:text-white" id="main-app-container">
       
       {/* 1. Top bar Banner advertisement */}
       <div className="bg-brand-blue py-2.5 text-center px-4" id="alert-banner-top">
@@ -365,10 +391,10 @@ export default function Home() {
         ) : (
           <div
             ref={bestSellerRailRef}
-            className="flex snap-x snap-mandatory gap-6 overflow-x-hidden scroll-smooth pb-3"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-3 [scrollbar-width:none] sm:gap-6 [&::-webkit-scrollbar]:hidden"
           >
             {allHotProducts.map((product) => (
-              <div key={product.id} className="w-[calc(25%-18px)] shrink-0 snap-start">
+              <div key={product.id} className="w-[82vw] shrink-0 snap-start sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
                 <ProductCard
                   product={product}
                   isWishlisted={wishlist.some((item) => item.id === product.id)}
@@ -394,41 +420,41 @@ export default function Home() {
       </div>
 
       {/* 6. Flash Sale Weekend section featuring real-time state countdown clock */}
-      <section className="overflow-hidden bg-slate-950 py-14 text-white" id="flash-sale-banner-section">
-        <div className="mx-auto max-w-[1536px] px-4 md:px-6 lg:px-10">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
+      <section className="overflow-hidden bg-slate-950 py-8 text-white md:py-14" id="flash-sale-banner-section">
+        <div className="mx-auto max-w-[1536px] px-3 md:px-6 lg:px-10">
+          <div className="grid grid-cols-1 items-center gap-6 md:gap-8 lg:grid-cols-12">
             
             {/* Flash text column */}
-            <div className="space-y-5 text-center lg:col-span-4 lg:text-left">
-              <span className="inline-flex items-center gap-1 rounded-full bg-red-600 px-3 py-1 text-xs font-black uppercase tracking-wider text-white">
+            <div className="space-y-4 text-center lg:col-span-4 lg:text-left">
+              <span className="inline-flex items-center gap-1 rounded-full bg-red-600 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-white md:text-xs md:tracking-wider">
                 <Zap className="h-3 w-3 fill-white" />
                 FLASH SALE CUỐI TUẦN
               </span>
-              <h2 className="text-3xl font-black uppercase leading-none tracking-tight text-white md:text-5xl">
+              <h2 className="text-[28px] font-black uppercase leading-[0.95] tracking-tight text-white md:text-5xl">
                 Giờ vàng <br /> giá sốc
               </h2>
-              <p className="mx-auto max-w-md text-sm leading-6 text-slate-300 lg:mx-0">
+              <p className="mx-auto max-w-md text-[13px] leading-5 text-slate-300 md:text-sm md:leading-6 lg:mx-0">
                 Chọn nhanh các mẫu đang giảm mạnh trong tuần. Số lượng có hạn, giá tự động trở về niêm yết khi hết thời gian sale.
               </p>
 
               {/* Countdown panel clocks ticker */}
-              <div className="flex justify-center gap-3 pt-2 lg:justify-start">
+              <div className="flex justify-center gap-2 pt-1 md:gap-3 md:pt-2 lg:justify-start">
                 <div className="flex flex-col items-center">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-white text-xl font-black text-brand-blue shadow-md sm:h-16 sm:w-16 sm:text-2xl">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white text-lg font-black text-brand-blue shadow-md sm:h-16 sm:w-16 sm:text-2xl">
                     {String(countdown.hours).padStart(2, '0')}
                   </div>
                   <span className="mt-1 text-[10px] font-bold uppercase text-slate-300">Giờ</span>
                 </div>
-                <div className="mt-4 text-xl font-black text-brand-yellow sm:text-2xl">:</div>
+                <div className="mt-3 text-xl font-black text-brand-yellow sm:mt-4 sm:text-2xl">:</div>
                 <div className="flex flex-col items-center">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-white text-xl font-black text-brand-blue shadow-md sm:h-16 sm:w-16 sm:text-2xl">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white text-lg font-black text-brand-blue shadow-md sm:h-16 sm:w-16 sm:text-2xl">
                     {String(countdown.minutes).padStart(2, '0')}
                   </div>
                   <span className="mt-1 text-[10px] font-bold uppercase text-slate-300">Phút</span>
                 </div>
-                <div className="mt-4 text-xl font-black text-brand-yellow sm:text-2xl">:</div>
+                <div className="mt-3 text-xl font-black text-brand-yellow sm:mt-4 sm:text-2xl">:</div>
                 <div className="flex flex-col items-center">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-white text-xl font-black text-brand-blue shadow-md sm:h-16 sm:w-16 sm:text-2xl">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white text-lg font-black text-brand-blue shadow-md sm:h-16 sm:w-16 sm:text-2xl">
                     {String(countdown.seconds).padStart(2, '0')}
                   </div>
                   <span className="mt-1 text-[10px] font-bold uppercase text-slate-300">Giây</span>
@@ -437,76 +463,62 @@ export default function Home() {
             </div>
 
             {/* Flash products list grid display */}
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:col-span-8">
-              
-              {/* Product 1: Rồng lửa */}
-              <div className="relative grid overflow-hidden rounded-lg border border-white/10 bg-white text-gray-900 shadow-2xl md:grid-cols-[42%_1fr]">
-                <span className="absolute left-4 top-4 z-10 rounded-full bg-red-600 px-2.5 py-0.5 text-[10px] font-black uppercase text-white">
-                  -30% Giảm
-                </span>
-                <div className="relative min-h-56 bg-slate-100">
-                  <img
-                    src={PRODUCTS.find((p) => p.id === 'p5')?.imageUrl ?? '/products/p5.jpg'}
-                    alt="Lining Axforce Cannon 4U"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="flex flex-col justify-between p-5">
-                  <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-brand-blue">Lining</span>
-                    <h3 className="mt-1 text-base font-black leading-snug text-gray-950">Lining Axforce Cannon 4U</h3>
-                    <div className="mt-3 flex items-baseline gap-2">
-                      <span className="text-lg font-black text-red-600">{UTILS.formatCurrency(1490000)}</span>
-                      <span className="text-xs text-gray-400 line-through">{UTILS.formatCurrency(1990000)}</span>
-                    </div>
-                    <p className="mt-3 line-clamp-2 text-xs leading-5 text-gray-500">
-                      Vợt dễ chơi, trợ lực tốt cho người mới nâng cấp và đánh phong trào.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => handleAddToCartDirectly(PRODUCTS.find((p) => p.id === 'p5') || PRODUCTS[4])}
-                    className="mt-5 w-full cursor-pointer rounded-md bg-brand-blue py-2.5 text-xs font-black text-white transition hover:bg-brand-blue-hover"
-                  >
-                    Mua ngay
-                  </button>
-                </div>
-              </div>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:col-span-8">
+              {flashSaleProducts.map((item) => {
+                const product = PRODUCTS.find((p) => p.id === item.id);
 
-              {/* Product 2: Áo Dry fit */}
-              <div className="relative grid overflow-hidden rounded-lg border border-white/10 bg-white text-gray-900 shadow-2xl md:grid-cols-[42%_1fr]">
-                <span className="absolute left-4 top-4 z-10 rounded-full bg-red-600 px-2.5 py-0.5 text-[10px] font-black uppercase text-white">
-                  -25% Hot
-                </span>
-                <div className="relative min-h-56 bg-slate-100">
-                  <img
-                    src={PRODUCTS.find((p) => p.id === 'p6')?.imageUrl ?? '/products/p6.jpg'}
-                    alt="Áo thi đấu Yonex Dry Fit"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="flex flex-col justify-between p-5">
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-brand-blue">Áo thể thao</span>
-                    <h3 className="mt-1 text-base font-black leading-snug text-gray-950">Áo thi đấu Yonex Dry Fit</h3>
-                    <div className="mt-3 flex items-baseline gap-2">
-                      <span className="text-lg font-black text-red-600">{UTILS.formatCurrency(299000)}</span>
-                      <span className="text-xs text-gray-400 line-through">{UTILS.formatCurrency(399000)}</span>
-                    </div>
-                    <p className="mt-3 line-clamp-2 text-xs leading-5 text-gray-500">
-                      Chất vải nhẹ, thoáng khí, phù hợp tập luyện và thi đấu cuối tuần.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => handleAddToCartDirectly(PRODUCTS.find((p) => p.id === 'p6') || PRODUCTS[5])}
-                    className="mt-5 w-full cursor-pointer rounded-md bg-brand-blue py-2.5 text-xs font-black text-white transition hover:bg-brand-blue-hover"
+                return (
+                  <article
+                    key={item.id}
+                    className="grid min-h-[164px] grid-cols-[112px_1fr] overflow-hidden rounded-xl border border-white/10 bg-white text-gray-900 shadow-2xl sm:grid-cols-[140px_1fr] md:min-h-[264px] md:grid-cols-[45%_1fr] md:rounded-lg"
                   >
-                    Mua ngay
-                  </button>
-                </div>
-              </div>
+                    <Link
+                      href={`/product/${item.id}`}
+                      aria-label={`Xem chi tiết ${item.title}`}
+                      className="group relative block min-h-full overflow-hidden bg-slate-100"
+                    >
+                      <span className="absolute left-2 top-2 z-10 rounded-full bg-red-600 px-2 py-0.5 text-[9px] font-black uppercase text-white shadow-sm md:left-4 md:top-4 md:px-2.5 md:text-[10px]">
+                        {item.badge}
+                      </span>
+                      <Image
+                        src={product?.imageUrl ?? item.fallbackImage}
+                        alt={item.title}
+                        fill
+                        sizes={item.imageSizes}
+                        className={`${item.imageClassName} transition duration-500 group-hover:scale-105`}
+                      />
+                    </Link>
 
+                    <div className="flex min-w-0 flex-col p-3 sm:p-4 md:p-5">
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-brand-blue">
+                          {item.eyebrow}
+                        </span>
+                        <Link
+                          href={`/product/${item.id}`}
+                          className="mt-1 line-clamp-2 block text-sm font-black leading-snug text-gray-950 transition hover:text-brand-blue md:text-base"
+                        >
+                          {item.title}
+                        </Link>
+                        <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1 md:mt-3">
+                          <span className="text-lg font-black text-red-600 md:text-xl">{UTILS.formatCurrency(item.price)}</span>
+                          <span className="text-xs text-gray-400 line-through">{UTILS.formatCurrency(item.oldPrice)}</span>
+                        </div>
+                        <p className="mt-2 line-clamp-2 text-[11px] leading-4 text-gray-500 md:mt-3 md:text-xs md:leading-5">
+                          {item.description}
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => handleAddToCartDirectly(product || PRODUCTS.find((p) => p.id === item.id) || PRODUCTS[0])}
+                        className="mt-3 w-full cursor-pointer rounded-md bg-brand-blue py-2 text-xs font-black text-white transition hover:bg-brand-blue-hover md:mt-5 md:py-2.5"
+                      >
+                        Mua ngay
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
 
           </div>

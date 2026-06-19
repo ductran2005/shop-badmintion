@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowUpDown, Home, Search, X } from 'lucide-react';
 import Header from './Header';
-import ProductCard from './ProductCard';
+import PromotionProductCard from './PromotionProductCard';
 import ProductDetailModal from './ProductDetailModal';
 import CartDrawer from './CartDrawer';
 import Footer from './Footer';
@@ -151,7 +151,7 @@ export default function ProductCollectionPage({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-gray-50 font-sans text-gray-900">
       <Header
         cart={cart}
         wishlist={wishlist}
@@ -173,14 +173,14 @@ export default function ProductCollectionPage({
           backgroundSize: 'cover'
         }}
       >
-        <div className="mx-auto grid min-h-[390px] max-w-[1536px] items-end gap-10 px-4 py-14 md:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-10">
-          <div>
+        <div className="mx-auto grid min-h-[340px] w-full max-w-[1536px] min-w-0 items-end gap-8 px-4 py-10 md:min-h-[390px] md:px-6 md:py-14 lg:grid-cols-[1.2fr_0.8fr] lg:px-10">
+          <div className="min-w-0">
             <Link href="/" className="mb-7 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/85 hover:text-brand-yellow">
               <Home className="h-4 w-4" />
               Trang chủ
             </Link>
             <p className="text-xs font-black uppercase tracking-[0.24em] text-brand-yellow">{eyebrow}</p>
-            <h1 className="mt-4 max-w-3xl text-4xl font-black tracking-tight md:text-6xl">{title}</h1>
+            <h1 className="mt-4 max-w-3xl break-words text-3xl font-black tracking-tight sm:text-4xl md:text-6xl">{title}</h1>
             <p className="mt-5 max-w-2xl text-sm font-semibold leading-7 text-blue-50 md:text-base">{description}</p>
             {badges.length > 0 && (
               <div className="mt-7 flex flex-wrap gap-2">
@@ -193,10 +193,10 @@ export default function ProductCollectionPage({
             )}
           </div>
 
-          <div className="grid grid-cols-3 overflow-hidden rounded-lg border border-white/20 bg-white/12 text-center backdrop-blur">
+          <div className="grid min-w-0 grid-cols-3 overflow-hidden rounded-lg border border-white/20 bg-white/12 text-center backdrop-blur">
             {stats.map((stat) => (
-              <div key={stat.label} className="border-r border-white/15 px-4 py-6 last:border-r-0">
-                <div className="text-2xl font-black text-brand-yellow">{stat.value}</div>
+              <div key={stat.label} className="border-r border-white/15 px-2 py-4 last:border-r-0 sm:px-4 sm:py-6">
+                <div className="text-xl font-black text-brand-yellow sm:text-2xl">{stat.value}</div>
                 <div className="mt-1 text-[11px] font-bold uppercase leading-4 text-white/85">{stat.label}</div>
               </div>
             ))}
@@ -204,7 +204,7 @@ export default function ProductCollectionPage({
         </div>
       </section>
 
-      <main className="mx-auto max-w-[1536px] px-4 py-12 md:px-6 lg:px-10">
+      <main className="mx-auto max-w-[1536px] px-4 py-8 md:px-6 md:py-12 lg:px-10">
         <div className="mb-8 grid gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm lg:grid-cols-[1fr_auto_auto] lg:items-center">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -229,7 +229,7 @@ export default function ProductCollectionPage({
           <select
             value={selectedBrand}
             onChange={(event) => setSelectedBrand(event.target.value)}
-            className="rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-700 outline-none focus:border-brand-blue"
+            className="w-full rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-700 outline-none focus:border-brand-blue lg:w-auto"
           >
             <option value="">Tất cả thương hiệu</option>
             {availableBrands.map((brand) => (
@@ -237,12 +237,12 @@ export default function ProductCollectionPage({
             ))}
           </select>
 
-          <div className="flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2">
+          <div className="flex min-w-0 items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2">
             <ArrowUpDown className="h-4 w-4 text-gray-500" />
             <select
               value={sortMode}
               onChange={(event) => setSortMode(event.target.value as SortMode)}
-              className="bg-transparent text-sm font-bold outline-none"
+              className="min-w-0 flex-1 bg-transparent text-sm font-bold outline-none"
             >
               {Object.entries(sortLabels).map(([value, label]) => (
                 <option key={value} value={value}>{label}</option>
@@ -251,7 +251,7 @@ export default function ProductCollectionPage({
           </div>
         </div>
 
-        <div className="mb-6 flex items-end justify-between gap-4">
+        <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="text-sm font-semibold text-gray-500">{filteredProducts.length}/{products.length} sản phẩm</p>
             <h2 className="mt-1 text-2xl font-black text-gray-950">Danh sách sản phẩm</h2>
@@ -280,13 +280,13 @@ export default function ProductCollectionPage({
                 </div>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
                   {group.products.map((product) => (
-                    <ProductCard
+                    <PromotionProductCard
                       key={product.id}
                       product={product}
                       isWishlisted={wishlist.some((item) => item.id === product.id)}
                       onToggleWishlist={() => handleToggleWishlist(product)}
-                      onQuickView={() => setQuickViewProduct(product)}
-                      onAddToCart={() => handleAddToCartDirectly(product)}
+                      onQuickView={(saleProduct) => setQuickViewProduct(saleProduct)}
+                      onAddToCart={(saleProduct) => handleAddToCartDirectly(saleProduct)}
                     />
                   ))}
                 </div>
@@ -296,13 +296,13 @@ export default function ProductCollectionPage({
         ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {filteredProducts.map((product) => (
-              <ProductCard
+              <PromotionProductCard
                 key={product.id}
                 product={product}
                 isWishlisted={wishlist.some((item) => item.id === product.id)}
                 onToggleWishlist={() => handleToggleWishlist(product)}
-                onQuickView={() => setQuickViewProduct(product)}
-                onAddToCart={() => handleAddToCartDirectly(product)}
+                onQuickView={(saleProduct) => setQuickViewProduct(saleProduct)}
+                onAddToCart={(saleProduct) => handleAddToCartDirectly(saleProduct)}
               />
             ))}
           </div>

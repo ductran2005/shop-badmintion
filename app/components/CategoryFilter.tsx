@@ -61,17 +61,17 @@ export default function CategoryFilter({
   const visibleCategories = CATEGORIES.filter((cat) => cat.id !== 'all');
 
   return (
-    <div className="mx-auto max-w-[1536px] px-4 md:px-6 lg:px-10" id="categories-section">
-      <div className="mb-8 text-center">
-        <h2 className="text-2xl font-medium text-brand-blue md:text-3xl">
+    <div className="mx-auto max-w-[1536px] px-3 md:px-6 lg:px-10" id="categories-section">
+      <div className="mb-5 text-center md:mb-8">
+        <h2 className="text-[22px] font-semibold text-brand-blue md:text-3xl">
           Sản phẩm cầu lông
         </h2>
-        <div className="mx-auto mt-4 flex h-1 w-36 overflow-hidden rounded-full bg-gray-200">
+        <div className="mx-auto mt-3 flex h-1 w-32 overflow-hidden rounded-full bg-gray-200 md:mt-4 md:w-36">
           <span className="mx-auto h-full w-11 rounded-full bg-brand-yellow" />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-5">
         {visibleCategories.map((cat) => {
           const isActive = selectedCategory === cat.id;
           const tile = categoryTiles[cat.id] ?? {
@@ -89,8 +89,8 @@ export default function CategoryFilter({
               <Link
                 href={`/category/${cat.id}`}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`group relative block aspect-[1.18] cursor-pointer overflow-hidden rounded-sm bg-slate-950 shadow-sm transition-all ${
-                  isActive ? 'ring-4 ring-blue-100' : 'hover:shadow-lg'
+                className={`group relative block aspect-[1.03] cursor-pointer overflow-hidden rounded-lg bg-slate-950 shadow-sm transition-all md:aspect-[1.18] md:rounded-sm ${
+                  isActive ? 'ring-2 ring-brand-yellow/80 md:ring-4 md:ring-blue-100' : 'hover:shadow-lg'
                 }`}
                 aria-label={cat.name}
               >
@@ -102,8 +102,8 @@ export default function CategoryFilter({
                   className={`object-cover object-center transition duration-500 group-hover:scale-105 ${tile.imageClass ?? ''}`}
                 />
 
-                <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-slate-950/90 via-slate-950/55 to-transparent px-4 pb-4 pt-12">
-                  <span className="block text-center text-sm font-black uppercase leading-tight text-white drop-shadow sm:text-base">
+                <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent px-2 pb-3 pt-10 md:px-4 md:pb-4 md:pt-12">
+                  <span className="block text-center text-[11px] font-black uppercase leading-tight text-white drop-shadow sm:text-sm md:text-base">
                     {tile.label}
                   </span>
                 </div>

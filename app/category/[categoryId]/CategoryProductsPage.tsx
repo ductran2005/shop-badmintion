@@ -264,6 +264,7 @@ export default function CategoryProductsPage({
   const [sortMode, setSortMode] = useState<SortMode>('default');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [openSections, setOpenSections] = useState<Record<FilterSectionKey, boolean>>({
@@ -434,7 +435,7 @@ export default function CategoryProductsPage({
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-white font-sans text-gray-900">
       <Header
         cart={cart}
         wishlist={wishlist}
@@ -459,9 +460,6 @@ export default function CategoryProductsPage({
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.16),transparent_34%)]" />
         <div className="relative">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-4xl backdrop-blur">
-            {category.emoji}
-          </div>
           <h1 className="text-4xl font-black tracking-tight md:text-6xl">{category.name}</h1>
           <div className="mt-4 flex items-center justify-center gap-2 text-sm font-bold">
             <Link href="/" className="inline-flex items-center gap-1 hover:text-brand-yellow">
@@ -474,22 +472,35 @@ export default function CategoryProductsPage({
         </div>
       </section>
 
-      <main className="mx-auto grid max-w-[1536px] grid-cols-1 gap-8 px-4 py-12 md:px-6 lg:grid-cols-[280px_1fr] lg:px-10">
+      <main className="mx-auto grid max-w-[1536px] grid-cols-1 gap-6 px-4 py-8 md:px-6 md:py-12 lg:grid-cols-[280px_1fr] lg:gap-8 lg:px-10">
         <aside>
-          <div className="sticky top-6 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+          <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm lg:sticky lg:top-6">
             <div className="border-b border-gray-200 p-4">
               <div className="flex items-start justify-between gap-3">
-                <div>
+                <button
+                  type="button"
+                  onClick={() => setIsMobileFiltersOpen((prev) => !prev)}
+                  className="flex min-w-0 flex-1 items-start gap-2 text-left lg:pointer-events-none"
+                  aria-expanded={isMobileFiltersOpen}
+                  aria-controls="category-filter-panel"
+                >
                   <div className="flex items-center gap-2">
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-brand-blue">
                       <SlidersHorizontal className="h-4 w-4" />
                     </span>
-                    <h2 className="text-sm font-black text-gray-950">Bộ lọc</h2>
+                    <div>
+                      <h2 className="text-sm font-black text-gray-950">Bộ lọc</h2>
+                      <p className="mt-1.5 text-[11px] font-semibold text-gray-500">
+                        {filteredProducts.length}/{products.length} sản phẩm phù hợp
+                      </p>
+                    </div>
                   </div>
-                  <p className="mt-1.5 text-[11px] font-semibold text-gray-500">
-                    {filteredProducts.length}/{products.length} sản phẩm phù hợp
-                  </p>
-                </div>
+                  <ChevronDown
+                    className={`ml-auto mt-1 h-4 w-4 shrink-0 text-gray-500 transition lg:hidden ${
+                      isMobileFiltersOpen ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
                 {hasActiveFilters && (
                   <button
                     type="button"
@@ -502,7 +513,7 @@ export default function CategoryProductsPage({
               </div>
 
               {hasActiveFilters && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
+                <div className={`${isMobileFiltersOpen ? 'flex' : 'hidden'} mt-3 flex-wrap gap-1.5 lg:flex`}>
                   {selectedBrands.map((brand) => (
                     <span key={brand} className="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-bold text-brand-blue">
                       {brand}
@@ -535,7 +546,10 @@ export default function CategoryProductsPage({
               )}
             </div>
 
-            <div className="px-4">
+            <div
+              id="category-filter-panel"
+              className={`${isMobileFiltersOpen ? 'block' : 'hidden'} px-4 lg:block`}
+            >
               <div className="border-b border-gray-200 py-3">
                 <div className="relative">
                   <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400" />
@@ -671,13 +685,13 @@ export default function CategoryProductsPage({
               </h2>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2">
+            <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
+              <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 sm:flex-none">
                 <SlidersHorizontal className="h-4 w-4 text-gray-500" />
                 <select
                   value={sortMode}
                   onChange={(event) => setSortMode(event.target.value as SortMode)}
-                  className="bg-transparent text-sm font-medium outline-none"
+                  className="min-w-0 flex-1 bg-transparent text-sm font-medium outline-none sm:flex-none"
                 >
                   <option value="default">Thứ tự mặc định</option>
                   <option value="price-asc">Giá thấp đến cao</option>
@@ -716,8 +730,8 @@ export default function CategoryProductsPage({
             <div
               className={
                 viewMode === 'grid'
-                  ? 'grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4'
-                  : 'grid grid-cols-1 gap-6 md:grid-cols-2'
+                  ? 'grid grid-cols-2 gap-3 sm:gap-6 xl:grid-cols-4'
+                  : 'grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6'
               }
             >
               {filteredProducts.map((product) => (

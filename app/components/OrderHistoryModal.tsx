@@ -29,7 +29,7 @@ export default function OrderHistoryModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4">
           
           {/* Backdrop wrapper */}
           <motion.div
@@ -45,15 +45,15 @@ export default function OrderHistoryModal({
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
-            className="relative flex flex-col w-full max-w-2xl max-h-[80vh] overflow-hidden rounded-3xl bg-white text-gray-900 shadow-2xl z-10"
+            className="relative z-10 flex max-h-[100dvh] w-full max-w-2xl flex-col overflow-hidden rounded-none bg-white text-gray-900 shadow-2xl sm:max-h-[80vh] sm:rounded-3xl"
             id="order-history-modal"
           >
             
             {/* Header Title */}
-            <div className="p-6 border-b border-gray-150 flex items-center justify-between">
+            <div className="flex items-center justify-between border-b border-gray-150 p-4 sm:p-6">
               <div className="flex items-center gap-2">
                 <ClipboardList className="h-5 w-5 text-brand-blue" />
-                <h2 className="text-base font-extrabold text-gray-900 uppercase">
+                <h2 className="text-sm font-extrabold uppercase text-gray-900 sm:text-base">
                   LỊCH SỬ HOẠT ĐỘNG KHÁCH HÀNG
                 </h2>
               </div>
@@ -90,7 +90,7 @@ export default function OrderHistoryModal({
             </div>
 
             {/* Scrollable list items container */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            <div className="flex-1 space-y-4 overflow-y-auto p-4 sm:p-6">
               
               {activeTab === 'orders' && (
                 orders.length === 0 ? (
@@ -115,11 +115,11 @@ export default function OrderHistoryModal({
                         {/* Order Items description List */}
                         <div className="space-y-1">
                           {order.items.map((item) => (
-                            <div key={item.id} className="text-xs text-gray-700 flex justify-between">
-                              <span className="line-clamp-1 max-w-[280px]">
+                            <div key={item.id} className="flex flex-col gap-1 text-xs text-gray-700 sm:flex-row sm:justify-between">
+                              <span className="line-clamp-2 min-w-0 sm:max-w-[280px]">
                                 {item.product.imageEmoji} {item.product.name} {item.selectedTension ? `(🧵 ${item.selectedTension})` : ''}
                               </span>
-                              <span className="font-bold shrink-0">
+                              <span className="shrink-0 font-bold">
                                 x{item.quantity} - {UTILS.formatCurrency(item.product.price * item.quantity)}
                               </span>
                             </div>
@@ -127,8 +127,8 @@ export default function OrderHistoryModal({
                         </div>
 
                         {/* Totals Summary checkout */}
-                        <div className="border-t border-gray-200/60 pt-2 flex items-baseline justify-between">
-                          <div className="flex gap-2">
+                        <div className="flex flex-col gap-2 border-t border-gray-200/60 pt-2 sm:flex-row sm:items-baseline sm:justify-between">
+                          <div className="flex flex-wrap gap-2">
                             <span className="inline-block rounded-full bg-yellow-100 text-yellow-800 px-2 py-0.5 text-[9px] font-bold">
                               Chờ xác nhận
                             </span>
